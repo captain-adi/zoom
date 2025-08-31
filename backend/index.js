@@ -36,7 +36,8 @@ import authRoutes from "./src/routes/auth_routes.js"
   app.use((err,req,res,next)=>{
     const {statusCode , message} = err ;
        res.status(statusCode).json({
-        message : message 
+        message : message ,
+        success : false
        })
   })
 
