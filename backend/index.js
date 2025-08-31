@@ -1,10 +1,13 @@
 import express from "express";
 import { configDotenv } from "dotenv";
+import cors from "cors";
 import connection from "./src/db/db.js";
 configDotenv();
 const app = express();
 
 const PORT = process.env.PORT || 8080;
+
+
 
 connection()
   .then(() => {
@@ -15,3 +18,26 @@ connection()
   .catch((error) => {
     console.error("Database connection failed:", error);
   });
+
+
+  app.use(cors({
+    origin  : "*",
+    credentials : true 
+  }));
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+ 
+//route imports
+import authRoutes from "./src/routes/auth_routes.js"
+
+  app.use('/api/auth' , authRoutes)
+
+
+  app.use((err,req,res,next)=>{
+    const {statusCode , message} = err ;
+       res.status(statusCode).json({
+        message : message 
+       })
+  })
+
+
