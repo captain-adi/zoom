@@ -19,7 +19,7 @@ connection()
     console.error("Database connection failed:", error);
   });
 
-
+ app.use(cookieParser())
   app.use(cors({
     origin  : "*",
     credentials : true 
@@ -29,6 +29,7 @@ connection()
  
 //route imports
 import authRoutes from "./src/routes/auth_routes.js"
+import cookieParser from "cookie-parser";
 
   app.use('/api/auth' , authRoutes)
 

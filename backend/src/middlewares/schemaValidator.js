@@ -1,6 +1,6 @@
 
 import Joi from "joi";
-import ErrorHandler from "../utils/Errorhandler.js";
+import ApiError from "../utils/ApiError.js";
 
 export const signUpValidation = async (req, res, next) => {
     const schema = Joi.object({
@@ -11,7 +11,7 @@ export const signUpValidation = async (req, res, next) => {
       
     const validation = schema.validate(req.body);
     if (validation.error) {
-        return next(new ErrorHandler(validation.error.details[0].message, 400));
+        return next(new ApiError(validation.error.details[0].message, 400));
     }
     next();
 }
@@ -25,7 +25,7 @@ export const signUpValidation = async (req, res, next) => {
 
     const validation = schema.validate(req.body);
     if (validation.error) {
-        return next(new ErrorHandler(validation.error.details[0].message, 400));
+        return next(new ApiError(validation.error.details[0].message, 400));
     }
     next();
 }
