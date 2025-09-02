@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import { useLogout } from "@/hooks/query";
 
 function Header() {
+  const {mutate , isPending} = useLogout()
+  const handleLogout = () => {
+    mutate()
+  }
   return (
    <header className="px-8 py-4 bg-white border-b shadow-sm">
   <div className="flex items-center justify-between container mx-auto">
@@ -31,6 +36,9 @@ function Header() {
       <Link to="/login">
         <Button>Login</Button>
       </Link>
+     <Button onClick={handleLogout} disabled={isPending}>
+       {isPending ? "Logging out..." : "Logout"}
+     </Button>
     </div>
   </div>
 </header>

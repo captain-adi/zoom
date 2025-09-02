@@ -1,12 +1,16 @@
-import api from "@/api/apiconfig";
-import { createContext, type ReactNode } from "react";
-import { useState } from "react";
+import { createContext, useContext, type ReactNode } from "react";
+import { useState,useEffect } from "react";
 
 
+
+interface IUser{
+    _id : string;
+    email : string;
+    username : string;
+}
 interface IContext{
-    user : string ;
-    setUser : (user: string) => void;
-    handleSignup : () => void;  
+    user : IUser | undefined;
+    setUser : (user: IUser | undefined) => void;
 }
 
 
@@ -14,21 +18,20 @@ const authContext = createContext<IContext | undefined>(undefined);
 
 
 export const AuthContextProvider = ({children} : {children: ReactNode})=>{
-    const [user, setUser] = useState<string>("");
+        const [user, setUser] = useState<IUser | undefined>(undefined);
 
-    const handleSignup = ()=>{
-        api.post("/auth/signup", { user })
-            .then(response => {
-                setUser(response.data.user);
-            })
-            .catch(error => {
-                console.error("Error signing up:", error);
-            });
-    }
 
     return (
-        <authContext.Provider value={{user, setUser , handleSignup}}>
+        <authContext.Provider value={{user, setUser }}>
             {children} 
         </authContext.Provider>
     )
 }
+
+export const useAuth = () => {
+    const context = useContext(authContext);
+    if (!context) {
+        throw new Error("useAuth must be used within an AuthContextProvider");
+    }
+    return context;
+};

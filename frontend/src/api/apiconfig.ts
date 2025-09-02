@@ -1,9 +1,9 @@
-import axios from "axios"
+import axiosR from "axios"
 
 
-const api = axios.create({
+const axios = axiosR.create({
     baseURL : "http://localhost:5000/api",
     withCredentials : true
 })
 
-export default api;
+export default axios;

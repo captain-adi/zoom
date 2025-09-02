@@ -7,11 +7,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { AuthContextProvider } from "./context/authContext";
 
 const queryClient = new QueryClient()
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">
@@ -20,6 +22,7 @@ function App() {
         </main>
         <Footer /> 
       </div>
+      </AuthContextProvider>
     </QueryClientProvider>
   );
 }
