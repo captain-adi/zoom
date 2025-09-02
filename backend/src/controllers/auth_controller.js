@@ -2,6 +2,7 @@ import { User } from "../models/user_model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import AsyncHandler from "../utils/AsyncHandler.js";
 import ApiError from "../utils/ApiError.js";
+import transporter from "../config/nodemailer.js";
 
 export const signUp = AsyncHandler(async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -14,7 +15,12 @@ export const signUp = AsyncHandler(async (req, res, next) => {
     email,
     password,
   });
-
+await transporter.sendMail({
+  from : process.env.SENDER ,
+  to: newUser.email,
+  subject: "🎉 Welcome Aboard, " + newUser.username + "!",
+  text: `Hi ${newUser.username},\n\n🎉 Welcome to Our Service!\n\nWe’re thrilled to have you join our community. Here’s what you can expect as a member:\n\n✨ Access to exclusive features and updates  \n🤝 Friendly support whenever you need it  \n🚀 A seamless and enjoyable experience\n\nTo get started, simply log in and explore all that we have to offer. If you have any questions or need help, just reply to this email — we’re always here for you.\n\nThank you for choosing us. We can’t wait to see what you accomplish!\n\nBest regards,  \nThe Team`
+ })
   res
     .status(201)
     .json(new ApiResponse(201, "User created successfully", { user: newUser }));

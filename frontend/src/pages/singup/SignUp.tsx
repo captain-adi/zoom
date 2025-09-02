@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 function SignUp() {
   const { register, handleSubmit } = useForm<IUser>();
-  const { mutate } = useSignup();
+  const { mutate,isPending } = useSignup();
 
   const onSubmit = (data: IUser) => {
     mutate(data);
@@ -28,6 +28,7 @@ function SignUp() {
               User Name
             </label>
             <input
+              disabled={isPending}
               {...register("username", { required: true })}
               type="text"
               placeholder="JohnDoe"
@@ -40,6 +41,7 @@ function SignUp() {
               Email
             </label>
             <input
+              disabled={isPending}
               {...register("email", { required: true })}
               type="email"
               placeholder="you@example.com"
@@ -52,6 +54,7 @@ function SignUp() {
               Password
             </label>
             <input
+              disabled={isPending}
               {...register("password", { required: true })}
               type="password"
               placeholder="••••••••"
@@ -61,8 +64,9 @@ function SignUp() {
           <button
             type="submit"
             className="w-full py-2 px-4 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg shadow-md transition"
+            disabled={isPending}
           >
-            Sign Up
+          {isPending ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
 
