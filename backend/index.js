@@ -2,11 +2,16 @@ import express from "express";
 import { configDotenv } from "dotenv";
 import cors from "cors";
 import connection from "./src/db/db.js";
+import {createServer} from 'http'
+import connectToSocket from "./src/controllers/socket_controller.js";
+import cookieParser from "cookie-parser";
 configDotenv();
 const app = express();
 
 const PORT = process.env.PORT || 8080;
 
+const server = createServer(app);
+const io = connectToSocket(server)
 
 
 connection()
@@ -21,7 +26,7 @@ connection()
 
  app.use(cookieParser())
   app.use(cors({
-    origin  : "*",
+    origin  : "http://localhost:5173",
     credentials : true 
   }));
   app.use(express.urlencoded({ extended: true }));
@@ -29,7 +34,8 @@ connection()
  
 //route imports
 import authRoutes from "./src/routes/auth_routes.js"
-import cookieParser from "cookie-parser";
+
+
 
   app.use('/api/auth' , authRoutes)
 
