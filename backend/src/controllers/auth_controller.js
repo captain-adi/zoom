@@ -23,7 +23,11 @@ await transporter.sendMail({
  })
   res
     .status(201)
-    .json(new ApiResponse(201, "User created successfully", { user: newUser }));
+    .json(new ApiResponse(201, "User created successfully", { user: {
+      _id: newUser._id,
+      username: newUser.username,
+      email: newUser.email,
+    } }));
 });
 
 export const login = AsyncHandler(async (req, res, next) => {
@@ -59,3 +63,11 @@ export const login = AsyncHandler(async (req, res, next) => {
 export const logout = AsyncHandler(async (req,res,next)=>{
     return res.clearCookie("accessToken").json(new ApiResponse(200,"logout successful"))
 })
+
+export const isAuthenticated = AsyncHandler(async (req,res)=>{
+   res.status(200).json(new ApiResponse(200, "User is authenticated", { user : {
+     _id: req.user._id,
+     username: req.user.username,
+     email: req.user.email,
+   } }));
+    })

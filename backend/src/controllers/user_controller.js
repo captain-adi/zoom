@@ -10,5 +10,9 @@ export const getUserData = AsyncHandler(async (req, res, next) => {
   if (!user) {
     return next(new ApiError("User not found", 404));
   }
-  res.status(200).json(new ApiResponse(200, "User data retrieved successfully", { user }));
+  res.status(200).json(new ApiResponse(200, "User data retrieved successfully", { user : {
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+  } }));
 });
