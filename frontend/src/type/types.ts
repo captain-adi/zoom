@@ -11,10 +11,8 @@ export interface IErrorResponse {
     success: boolean;
 }
 
-export interface ISuccessResponse {
+export interface ISuccessResponse<T = any> {
     message: string;
     success: boolean;
-    data?: {
-        user: IUser ;
-    };
+    data?: T;
 }

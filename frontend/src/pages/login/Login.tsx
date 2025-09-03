@@ -1,5 +1,7 @@
+import { useAuth } from "@/context/authContext";
 import { useLogin } from "@/hooks/query"
 import { User } from "lucide-react"
+import { useEffect } from "react";
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -9,9 +11,17 @@ type LoginFormInputs = {
 };
 
 function Login() {
-  const {register,handleSubmit,reset} = useForm<LoginFormInputs>()
+  const {register,handleSubmit} = useForm<LoginFormInputs>()
   const {mutate,isPending} = useLogin()
   const navigate = useNavigate();
+  const {isLoggedin} = useAuth();
+
+  useEffect(() => {
+    if (isLoggedin) {
+      navigate("/");
+    }
+  }, [isLoggedin, navigate]);
+
   const onSubmit = (data: LoginFormInputs) => {
     mutate(data , {
       onSuccess: () => {

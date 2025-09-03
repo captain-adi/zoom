@@ -1,11 +1,22 @@
+import { useAuth } from "@/context/authContext";
 import { useSignup } from "@/hooks/query";
 import type { IUser } from "@/type/types";
 import { User } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 function SignUp() {
   const { register, handleSubmit } = useForm<IUser>();
   const { mutate,isPending } = useSignup();
+  const {isLoggedin} = useAuth();
+  const navigate = useNavigate();
+  
+  useEffect(()=>{
+    if (isLoggedin) {
+      navigate("/");
+    }
+  }, [isLoggedin, navigate]);
 
   const onSubmit = (data: IUser) => {
     mutate(data);

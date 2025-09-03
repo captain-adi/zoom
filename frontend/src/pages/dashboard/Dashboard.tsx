@@ -1,5 +1,9 @@
+import { useAuth } from "@/context/authContext";
 
 function Dashboard() {
+  const {user,isLoggedin} = useAuth()
+  console.log("user", user)
+  console.log("isloggedin",isLoggedin)
   return (
     <div className=" flex justify-center items-center h-screen w-full">
       <div className="flex  items-center h-full gap-5 container mx-auto">

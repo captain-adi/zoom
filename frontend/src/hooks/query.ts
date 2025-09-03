@@ -21,7 +21,7 @@ export const useSignup = ()=>{
 }
 
 export const useLogin = ()=>{
-    const {setUser} = useAuth()
+    const {setUser,setIsLoggedin} = useAuth()
     return useMutation({
         mutationKey : ["login"],
         mutationFn : async (data : {email:string,password:string})=>{
@@ -29,8 +29,8 @@ export const useLogin = ()=>{
             return response.data;
         },
         onSuccess: (response: ISuccessResponse) => {
-            console.log(response?.data?.user)
-            setUser(response?.data?.user);
+            setUser(response.data?.user);
+            setIsLoggedin(true);
             successHandler(response.message);
         },
         onError: (error)=>{
@@ -41,7 +41,7 @@ export const useLogin = ()=>{
 
 
 export const useLogout = ()=>{
-    const {setUser} = useAuth()
+    const {setUser,setIsLoggedin} = useAuth()
     return useMutation({
         mutationKey: ["logout"],
         mutationFn: async () => {
@@ -51,6 +51,7 @@ export const useLogout = ()=>{
         onSuccess: (response) => {
             successHandler(response.message);
             setUser(undefined);
+            setIsLoggedin(false);
         },
         onError: (error)=>{
             errorHandler(error)

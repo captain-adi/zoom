@@ -7,7 +7,7 @@ const router = express.Router();
 router.route('/signup').post(signUpValidation, signUp)
 router.route("/login").post(loginValidation, login)
 router.route("/logout").post(passport.authenticate("jwt",{session : false}),logout)
-router.route("/is-auth").post(passport.authenticate("jwt",{session : false}),isAuthenticated)
+router.route("/is-auth").get(passport.authenticate("jwt",{session : false}),isAuthenticated)
 
 
 export default router ;
