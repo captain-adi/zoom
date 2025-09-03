@@ -29,11 +29,13 @@ connection()
     origin  : "http://localhost:5173",
     credentials : true 
   }));
+  app.use(passport.initialize())
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
  
 //route imports
 import authRoutes from "./src/routes/auth_routes.js"
+import passport from "passport";
 
 
 
@@ -41,7 +43,7 @@ import authRoutes from "./src/routes/auth_routes.js"
 
 
   app.use((err,req,res,next)=>{
-    const {statusCode , message} = err ;
+    const {statusCode = 500 , message } = err ;
        res.status(statusCode).json({
         message : message ,
         success : false
