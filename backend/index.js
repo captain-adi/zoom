@@ -35,11 +35,13 @@ connection()
  
 //route imports
 import authRoutes from "./src/routes/auth_routes.js"
+import userRoutes from "./src/routes/user_routes.js"
 import passport from "passport";
 
 
 
   app.use('/api/auth' , authRoutes)
+  app.use('/api/user', userRoutes);
 
 
   app.use((err,req,res,next)=>{
