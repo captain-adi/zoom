@@ -5,18 +5,19 @@ import connection from "./src/db/db.js";
 import {createServer} from 'http'
 import connectToSocket from "./src/controllers/socket_controller.js";
 import cookieParser from "cookie-parser";
+import passport from "passport";
 configDotenv();
 const app = express();
 
 const PORT = process.env.PORT || 8080;
 
 const server = createServer(app);
-const io = connectToSocket(server)
+const io = connectToSocket(server);
 
 
 connection()
   .then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
   })
@@ -36,7 +37,6 @@ connection()
 //route imports
 import authRoutes from "./src/routes/auth_routes.js"
 import userRoutes from "./src/routes/user_routes.js"
-import passport from "passport";
 
 
 

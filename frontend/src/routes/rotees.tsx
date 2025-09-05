@@ -1,4 +1,5 @@
 import App from "@/App"
+import Video from "@/components/video/Video"
 import Dashboard from "@/pages/dashboard/Dashboard"
 import Login from "@/pages/login/Login"
 import SignUp from "@/pages/singup/SignUp"
@@ -20,6 +21,10 @@ const routes = createBrowserRouter([
             {
                 path : "/signup",
                 element : <SignUp/>
+            },
+            {
+                path : "/video",
+                element : <Video/>
             }
         ]
     }
